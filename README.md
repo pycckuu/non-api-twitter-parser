@@ -20,13 +20,13 @@ In command line open the folder and run python. In python shell import the modul
 In [1]: import twitter_parser
 ```
 
-Now, go to the [Twitter advanced search page](https://twitter.com/search-advanced?lang=en) and fill in form's fields in  which you are interested in, hit 'Search' button. When the page is loaded you can adjust the parameters. For instance you may select 'News' tab. When everything is set and the Twitter advanced search page loads the desired result you need to copy the address url from your browser. Now, run the scrapper with the URI:
+Now, go to the [Twitter advanced search page](https://twitter.com/search-advanced?lang=en) and fill in form's fields in  which you are interested in, hit 'Search' button. When the page is loaded you can adjust the parameters: for instance, you may select 'News' tab if you  are interested in news relateed tweets. When everything is set and the Twitter advanced search page loads the desired result, you need to copy the address url from your browser. Now, run the scrapper with the URI as a string:
 
 ```python
 In [2]: twitter_parser.scrape_page('https://twitter.com/search?f=news&vertical=news&q=water&src=typd&lang=en')
 ```
 
-It will load Firefox browser and perform scrolling of the page every 0.5 second. After some time, when you fill that it is enough of tweets, you need to interrupt the script. Select all the content in Firefox page (ctrl-A) and copy it (ctrl-C). Save the text into txt file and put it in data folder (you may see as an example txt files already saved there for you, don't forget to delete them before you start scrapping). You can perform this operation several times depending on your needs.
+It will load Firefox browser and perform scrolling of the page every 0.5 second to load new content. After some time, when you fill that it is enough of tweets, you need to interrupt the script. Select all the content in Firefox page (ctrl-A) and copy it (ctrl-C). Save the text into txt file and put it in data folder (you may see as an example txt files already saved there for you, don't forget to delete them before you start scrapping). You can perform this operation several times depending on your needs.
 
 When all tweets of interest are saved into the _data_ folder, you may run the parser:
 
