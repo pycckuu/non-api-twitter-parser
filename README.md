@@ -48,8 +48,8 @@ Fifty most common words in tweets:
 
 Also, script will return all parsed tweets into the variable _prsd\_tweets_ which is list of python dictionaries. The keys are 
 - 'id' = ID of the tweet;
-- 'date' = datetime object;
-- 'text' = string of the text of tweet;
+- 'date' = date of the tweet as a datetime object;
+- 'text' = message of the particular tweet as a string;
 - 'emo' = sentiment: if '-1' - undefined. The field saved for Deep Learning (soon).
 
 #### Features
