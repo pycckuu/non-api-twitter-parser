@@ -96,6 +96,7 @@ In [12]: df1.plot(kind='area')
 
 #### Notes  
 - It doesn't matter how many txt files will be in _data_ folder, the utility will load them all;
+- The code of this example you may find in Jupyter (iPython) notebook _Visualisation.ipynb_.
 
 #### Soon
 
