@@ -100,7 +100,7 @@ In [12]: df1.plot(kind='area')
 
 Deep Learning Recurrent Neural Network algorithms which get sentiment of parsed tweets.
 
-# The MIT License (MIT)
+The MIT License (MIT)
 
 Copyright (c) 2016 Igor Markelov
 
