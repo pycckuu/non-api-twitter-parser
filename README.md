@@ -91,7 +91,7 @@ And you can easily plot graphs:
 In [12]: df1.plot(kind='area')
 ```
 
-![alt tag](https://github.com/pycckuu/non-api-twitter-parser/tree/master/img/df1.png)
+![alt tag](https://raw.githubusercontent.com/pycckuu/non-api-twitter-parser/master/img/df1.png)
 
 # Notes  
 - It doesn't matter how many txt files will be in _data_ folder, the utility will load them all;
