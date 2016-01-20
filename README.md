@@ -52,6 +52,8 @@ Also, script will return all parsed tweets into the variable _prsd\_tweets_ whic
 - 'text' = string of the text of tweet;
 - 'emo' = sentiment: if '-1' - undefined. The field saved for Deep Learning (soon).
 
+#### Features
+
 You may estimate daily count of words. You may pass words as a list and in this case the script will return the sum of words in the list as in example with ['world','global']:
 ```python
 In [4]: region = {}
