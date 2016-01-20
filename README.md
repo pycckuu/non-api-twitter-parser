@@ -101,6 +101,10 @@ In [12]: df1.plot(kind='area')
 
 Deep Learning Recurrent Neural Network algorithms which get sentiment of parsed tweets.
 
+#### Collaborators are really welcome!
+
+Please, contact me, if you know how to improve or have ideas about some cool features. 
+Generally, I expect collaborators to create the pull request with new feature/improvement!
 
 ##### The MIT License (MIT)
 
