@@ -1,11 +1,12 @@
 # Non API Twitter Parser
 Small Python utility which helps you to parse and analyse the tweets from Twitter without using twitter API. The API has a restrictions and I wrote this script in order to overcome them.
 
-# Requirements:
+#### Requirements
+
 - [Firefox](https://www.mozilla.org/en-US/firefox/desktop/);
 - [Selenium](https://github.com/SeleniumHQ/selenium/tree/master/py). To install run: ```pip install selenium```
 
-# Usage
+#### Usage
 
 First, clone the repository:
 
@@ -93,14 +94,15 @@ In [12]: df1.plot(kind='area')
 
 ![alt tag](https://raw.githubusercontent.com/pycckuu/non-api-twitter-parser/master/img/df1.png)
 
-# Notes  
+#### Notes  
 - It doesn't matter how many txt files will be in _data_ folder, the utility will load them all;
 
-# Soon
+#### Soon
 
 Deep Learning Recurrent Neural Network algorithms which get sentiment of parsed tweets.
 
-The MIT License (MIT)
+
+##### The MIT License (MIT)
 
 Copyright (c) 2016 Igor Markelov
 
