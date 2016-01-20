@@ -26,7 +26,7 @@ Now, go to the [Twitter advanced search page](https://twitter.com/search-advance
 In [2]: twitter_parser.scrape_page('https://twitter.com/search?f=news&vertical=news&q=water&src=typd&lang=en')
 ```
 
-It will load Firefox browser and perform scrolling of the page every 0.5 second to load new content. After some time, when you fill that it is enough of tweets, you need to interrupt the script. Select all the content in Firefox page (ctrl-A) and copy it (ctrl-C). Save the text into txt file and put it in data folder (you may see as an example txt files already saved there for you, don't forget to delete them before you start scrapping). You can perform this operation several times depending on your needs.
+It will load Firefox browser and perform scrolling of the page every 0.5 second to load new content. After some time, when you fill that it is enough of tweets, you need to interrupt the script. Select all the content in Firefox page (```ctrl-A```) and copy it (```ctrl-C```). Paste the text (```ctrl-V```) into txt file and put it in data folder (you may see as an example txt files already saved there for you, don't forget to delete them before you start scrapping). You can perform this operation several times depending on your needs.
 
 When all tweets of interest are saved into the _data_ folder, you may run the parser:
 
