@@ -124,7 +124,7 @@ def twitter_wordcount(text, quantity):
     return sorted(wordcount.iteritems(), key=operator.itemgetter(1), reverse=True)[:quantity]
 
 
-def parse_folder(fldr):
+def parse_folder(fldr='Data'):
     print 'Found files'
     text = read_files(find_files(fldr))
     tweets = split_text_to_tweets(text)
