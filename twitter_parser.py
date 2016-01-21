@@ -28,10 +28,10 @@ def scrape_page(page_url):
         time.sleep(0.5)
 
 
-def daily_count_words(words, unprsd_tweets):
+def daily_count_words(words, prsd_tweets):
     w_counter = []
     for word in words:
-        w_counter.append(count_word_in_tweets(word, unprsd_tweets))
+        w_counter.append(count_word_in_tweets(word, prsd_tweets))
     w_counter = reduce(lambda x, y: dict((k, v + y[k]) for k, v in x.iteritems()), w_counter)
     return w_counter
 
@@ -116,7 +116,7 @@ def twitter_wordcount(text, quantity):
     for word in text.split():
         word = word.lower()
         word = regex.sub('', word)
-        if word not in often_words and not word.isdigit(): # and word not in mostcommon:
+        if word not in often_words and not word.isdigit():  # and word not in mostcommon:
             if word not in wordcount:
                 wordcount[word] = 1
             else:
