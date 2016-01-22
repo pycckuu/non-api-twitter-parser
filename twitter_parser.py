@@ -28,10 +28,10 @@ def scrape_page(page_url):
         time.sleep(0.5)
 
 
-def daily_count_words(words, unprsd_tweets):
+def daily_count_words(words, prsd_tweets):
     w_counter = []
     for word in words:
-        w_counter.append(count_word_in_tweets(word, unprsd_tweets))
+        w_counter.append(count_word_in_tweets(word, prsd_tweets))
     w_counter = reduce(lambda x, y: dict((k, v + y[k]) for k, v in x.iteritems()), w_counter)
     return w_counter
 
@@ -79,12 +79,14 @@ def count_word_in_tweets(word, tweets):
     return counter
 
 
-def clean_tweet(tweet_text):
+def clean_tweet(tweet_text, no_url=False):
     arr = tweet_text.split("\n")
     len_arr = [len(string) for string in arr]
     idx = len_arr.index(max(len_arr))
-    no_links = re.sub(r'https?:\/\/.*[\r\n]*', '', arr[idx]).strip()
-    text = ''.join(ch for ch in no_links if ch < '\x80')
+    txt = arr[idx].strip()
+    if no_url:
+        txt = re.sub(r'https?:\/\/.*[\r\n]*', '', txt)
+    text = ''.join(ch for ch in txt if ch < '\x80')
     return text
 
 
@@ -116,7 +118,7 @@ def twitter_wordcount(text, quantity):
     for word in text.split():
         word = word.lower()
         word = regex.sub('', word)
-        if word not in often_words and not word.isdigit(): # and word not in mostcommon:
+        if word not in often_words and not word.isdigit():  # and word not in mostcommon:
             if word not in wordcount:
                 wordcount[word] = 1
             else:

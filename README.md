@@ -26,15 +26,15 @@ Now, go to the [Twitter advanced search page](https://twitter.com/search-advance
 In [2]: twitter_parser.scrape_page('https://twitter.com/search?f=news&vertical=news&q=water&src=typd&lang=en')
 ```
 
-It will load Firefox browser and perform scrolling of the page every 0.5 second to load new content. After some time, when you fill that it is enough of tweets, you need to interrupt the script. Select all the content in Firefox page (```ctrl-A```) and copy it (```ctrl-C```). Paste the text (```ctrl-V```) into txt file and put it in data folder (you may see as an example txt files already saved there for you, don't forget to delete them before you start scrapping). You can perform this operation several times depending on your needs.
+It will load Firefox browser and perform scrolling of the page every 0.5 second to load new content. After some time, when you think that it is enough information on the Firefox page, you need to interrupt the script, select all the content in Firefox page (```ctrl-A```), copy it (```ctrl-C```) and paste the text (```ctrl-V```) into txt file, save txt-file in data folder (you may see as an example txt-files already saved there for you, don't forget to delete them before you start scrapping). You can perform this operation several times depending on your needs.
 
 When all tweets of interest are saved into the _data_ folder, you may run the parser:
 
 ```python
-In [3]: prsd_tweets = twitter_parser.parse_folder('data')
+In [3]: prsd_tweets = twitter_parser.parse_folder()
 ```
 
-By default, the script will search for text files in _data_ folder, but you may specify any folder. The script will output some basic info about found files, total amount of parsed tweets and 50 most common words in all tweets:
+By default, the script will search for text files in _data_ folder, but you may specify any folder as input parameter for the method. The script will output some basic info about found files, total amount of parsed tweets and 50 most common words in tweets:
 ```
 Found files
 Data/dec13-dec6.txt
@@ -97,7 +97,7 @@ In [12]: df1.plot(kind='area')
 ![alt tag](https://raw.githubusercontent.com/pycckuu/non-api-twitter-parser/master/img/df1.png)
 
 #### Notes  
-- It doesn't matter how many txt files will be in _data_ folder, the utility will load them all;
+- It doesn't matter how many txt-files will be in _data_ folder, the utility will load them all;
 - The code of this example you may find in Jupyter (iPython) notebook _Visualisation.ipynb_.
 
 #### Soon
