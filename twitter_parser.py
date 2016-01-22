@@ -79,12 +79,14 @@ def count_word_in_tweets(word, tweets):
     return counter
 
 
-def clean_tweet(tweet_text):
+def clean_tweet(tweet_text, no_url=False):
     arr = tweet_text.split("\n")
     len_arr = [len(string) for string in arr]
     idx = len_arr.index(max(len_arr))
-    no_links = re.sub(r'https?:\/\/.*[\r\n]*', '', arr[idx]).strip()
-    text = ''.join(ch for ch in no_links if ch < '\x80')
+    txt = arr[idx]
+    if no_url:
+        txt = re.sub(r'https?:\/\/.*[\r\n]*', '', txt).strip()
+    text = ''.join(ch for ch in txt if ch < '\x80')
     return text
 
 
