@@ -6,24 +6,25 @@ from keras.layers.embeddings import Embedding
 from keras.layers.recurrent import LSTM
 # from tweets_parser import *
 import sys
+import os.path
 
 semantics_max_features = 1600000
 sematics_maxlen = 100
 semantics_batch_size = 32
 
 
-def daily_count_semantics(unprsd_tweets):
+def daily_count_semantics(parsed_tweets):
     s_counter = {}
     s_counter['positive'] = {}
     s_counter['negative'] = {}
     s_counter['tolerant'] = {}
-    for t in unprsd_tweets:
-        if t['emo'] < 0.33:
+    for t in parsed_tweets:
+        if t['emo'] <= 0.33 and t['emo'] >= 0:
             if not t['date'] in s_counter['negative']:
                 s_counter['negative'][t['date']] = 1
             else:
                 s_counter['negative'][t['date']] += 1
-        if t['emo'] > 0.33 and t['emo'] < 0.66:
+        if t['emo'] > 0.33 and t['emo'] <= 0.66:
             if not t['date'] in s_counter['tolerant']:
                 s_counter['tolerant'][t['date']] = 1
             else:
@@ -37,6 +38,21 @@ def daily_count_semantics(unprsd_tweets):
     s_counter['positive'].pop(None, None)
     s_counter['negative'].pop(None, None)
     s_counter['tolerant'].pop(None, None)
+    return s_counter
+
+
+def tweets_with_word(words, parsed_tweets):
+    tweets = []
+    for t in parsed_tweets:
+        for w in words:
+            if w.lower() in t['text'] and t not in tweets:
+                tweets.append(t)
+    return tweets
+
+
+def daily_count_semantics_for_words(words, parsed_tweets):
+    tweets = tweets_with_word(words, parsed_tweets)
+    s_counter = daily_count_semantics(tweets)
     return s_counter
 
 
@@ -102,10 +118,9 @@ def update_sentiments(m, parsed_tweets, word_dict):
 
 
 def read_semantics_database():
-    x = []
-    y = []
-    print 'reading Stanford semantics database'
-    with open('data/stanford_train_data/training.1600000.processed.noemoticon.csv', 'rb') as csvfile:
+    x, y = [], []
+    print 'Reading Stanford Semantics Database'
+    with open('stanford_train_data/training.1600000.processed.noemoticon.csv', 'rb') as csvfile:
         file = csv.reader(csvfile, delimiter=',')
         for row in file:
             y.append(float(row[0]) / 4)
@@ -116,10 +131,9 @@ def read_semantics_database():
 
 
 def read_test_semantics_database():
-    x = []
-    y = []
+    x, y = [], []
     print 'Reading Stanford test Semantics Database'
-    with open('data/stanford_train_data/testdata.manual.2009.06.14.csv', 'rb') as csvfile:
+    with open('stanford_train_data/testdata.manual.2009.06.14.csv', 'rb') as csvfile:
         file = csv.reader(csvfile, delimiter=',')
         for row in file:
             y.append(float(row[0]) / 4)
@@ -129,11 +143,51 @@ def read_test_semantics_database():
     return x, y
 
 
-def semantic_analysis(parsed_tweets):
-    x, y = read_test_semantics_database()
-    dct = create_dict_of_words(x + [tweet['text'] for tweet in parsed_tweets])
-    num_x = convert_input_string_arr_to_numbers_arr(x, dct)
+def semantic_analysis_with_preloaded_weigths(parsed_tweets, file_path):
+    dct, num_x, x, y = prepare_for_sematics_analysis(parsed_tweets)
+    m = load_sematic_weights(file_path)
+    print 'Updating parsed tweets'
+    parsed_tweets = update_sentiments(m, parsed_tweets, dct)
+    return parsed_tweets, m
+
+
+def semantic_analysis_without_preloaded_weigths(parsed_tweets):
+    dct, num_x, x, y = prepare_for_sematics_analysis(parsed_tweets)
     m = model_compile()
     m = model_fit(m, num_x, y)
     parsed_tweets = update_sentiments(m, parsed_tweets, dct)
-    return parsed_tweets
+    print "Dumping model weights into file 'weights.h5'"
+    save_semantics_weights(m)
+    return parsed_tweets, m
+
+
+def prepare_for_sematics_analysis(parsed_tweets):
+    x, y = read_semantics_database()
+    dct = create_dict_of_words(x + [tweet['text'] for tweet in parsed_tweets])
+    num_x = convert_input_string_arr_to_numbers_arr(x, dct)
+    return dct, num_x, x, y
+
+
+def load_sematic_weights(file_path='weights.h5'):
+    m = model_compile()
+    print "Loading Weights from file '%s'" % file_path
+    m.load_weights(file_path)
+    return m
+
+
+def save_semantics_weights(m, file_name='weights.h5'):
+    m.save_weights(file_name, overwrite=True)
+
+
+def semantic_analysis(parsed_tweets, file_path='weights.h5'):
+    if os.path.isfile(file_path):
+        print "We found file '%s' in root folder" % file_path
+        print 'Running semantics analysis with preloaded weights'
+        print "If you want to re-train the model, please, delete '%s' file and run this method again" % file_path
+        print 'For different weight file::: Please, pass the filepath as second argument'
+        parsed_tweets, m = semantic_analysis_with_preloaded_weigths(parsed_tweets, file_path)
+    else:
+        print "We didn\'t find file 'weights.h5' in root folder of project"
+        print 'We need to train the model - it takes time: roughly 4 days'
+        parsed_tweets, m = semantic_analysis_without_preloaded_weigths(parsed_tweets)
+    return parsed_tweets, m

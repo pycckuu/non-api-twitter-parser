@@ -83,9 +83,9 @@ def clean_tweet(tweet_text, no_url=False):
     arr = tweet_text.split("\n")
     len_arr = [len(string) for string in arr]
     idx = len_arr.index(max(len_arr))
-    txt = arr[idx]
+    txt = arr[idx].strip()
     if no_url:
-        txt = re.sub(r'https?:\/\/.*[\r\n]*', '', txt).strip()
+        txt = re.sub(r'https?:\/\/.*[\r\n]*', '', txt)
     text = ''.join(ch for ch in txt if ch < '\x80')
     return text
 
