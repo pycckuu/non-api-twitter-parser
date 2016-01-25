@@ -138,8 +138,15 @@ Predicting sentiments...
 [28068/28068]:100%
 ```
 
-Now, you 
+You may count positive, tolerant and negative sentiment of the tweets containing list of words by:
 
+```python
+In [15]: twitter_semantics.daily_count_semantics_for_words(['world','global'],prsd_tweets)
+```
+
+It will count sentiment of the tweets containing words _world_ and _global_. Now, you may build graphs of polarity of tweets:
+
+![alt tag](https://raw.githubusercontent.com/pycckuu/non-api-twitter-parser/master/img/df2.png)
 
 #### Notes  
 - It doesn't matter how many txt-files will be in _data_ folder, the utility will load them all;
