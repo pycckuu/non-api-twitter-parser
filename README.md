@@ -1,4 +1,4 @@
-# Non API Twitter Parser with Semantics Analysis.
+# Non API Twitter Parser with Semantics Analysis
 Small Python utility which helps you to parse and analyse the tweets from Twitter without using twitter API. The API has a restrictions and I wrote this script in order to overcome them. Moreover, this script contain methods which helps you analyse the statistics of tweets including semantic using Deep Learning Recurrent Neural Network algorithms based on [Keras](http://keras.io/), [Theano](https://github.com/Theano/Theano), and/or [TensorFlow](https://github.com/tensorflow/tensorflow). 
 
 #### Requirements
