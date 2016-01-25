@@ -1,10 +1,19 @@
-# Non API Twitter Parser
-Small Python utility which helps you to parse and analyse the tweets from Twitter without using twitter API. The API has a restrictions and I wrote this script in order to overcome them.
+# Non API Twitter Parser with Semantics Analysis.
+Small Python utility which helps you to parse and analyse the tweets from Twitter without using twitter API. The API has a restrictions and I wrote this script in order to overcome them. Moreover, this script contain methods which helps you analyse the statistics of tweets including semantic using Deep Learning Recurrent Neural Network algorithms based on [Keras](http://keras.io/), [Theano](https://github.com/Theano/Theano), and/or [TensorFlow](https://github.com/tensorflow/tensorflow). 
 
 #### Requirements
 
+For parsing:
 - [Firefox](https://www.mozilla.org/en-US/firefox/desktop/);
 - [Selenium](https://github.com/SeleniumHQ/selenium/tree/master/py). To install run: ```pip install selenium```
+
+For Deep Learning:
+- [Keras](http://keras.io/). To install: ```pip install keras```
+- [Theano](https://github.com/Theano/Theano). To install ```pip install theano```
+- h5py. To install: ```pip install h5py```
+- csv. To install: ```pip install csv```
+- numpy. To install: ```pip install numpy```
+
 
 #### Usage
 
@@ -54,6 +63,8 @@ Also, script will return all parsed tweets into the variable _prsd\_tweets_ whic
 
 #### Features
 
+##### Daily count of tweets containing specific word
+
 You may estimate daily count of words. You may pass words as a list and in this case the script will return the sum of words in the list as in example with ['world','global']:
 ```python
 In [4]: region = {}
@@ -96,13 +107,44 @@ In [12]: df1.plot(kind='area')
 
 ![alt tag](https://raw.githubusercontent.com/pycckuu/non-api-twitter-parser/master/img/df1.png)
 
+##### Sentiment of parsed tweets
+
+Now, you may perform the semantics analysis. Unzip the [Stanford tweets database](http://help.sentiment140.com/for-students/) _stanford\_train\_data.zip_, which is in the folder of repository. Run the model:
+
+```python
+In [13]: prsd_tweets, m = twitter_semantics.semantic_analysis(prsd_tweets)
+```
+
+It will perform the training of neural network. If you don't want to wait  long you may use already trained [Keras]() weights. Download them using this [link](https://www.dropbox.com/s/jp443in7mu5i3xr/weights.h5?dl=1) and put file in in the repository root folder. Run the script again:
+
+```python 
+In [14]: prsd_tweets, m = twitter_semantics.semantic_analysis(prsd_tweets)
+```
+
+The script will update the _emo_ key of dictionaries _prsd\_tweets_ much faster without learning of the model. As the output you will see the following:
+
+```
+Found file 'weights.h5' in root folder
+Running semantics analysis with preloaded weights
+If you want to re-train the model, please, delete 'weights.h5' file and run this method again
+For different weight file::: Please, pass the filepath as second argument
+Reading Stanford Semantics Database
+Found 1600000 entries
+Preparing tweets
+Compiling Keras model...
+Loading Weights from file 'weights.h5'
+Updating parsed tweets
+Predicting sentiments...
+[28068/28068]:100%
+```
+
+Now, you 
+
+
 #### Notes  
 - It doesn't matter how many txt-files will be in _data_ folder, the utility will load them all;
 - The code of this example you may find in Jupyter (iPython) notebook _Visualisation.ipynb_.
 
-#### Soon
-
-Deep Learning Recurrent Neural Network algorithms which get sentiment of parsed tweets.
 
 #### Collaborators are really welcome!
 

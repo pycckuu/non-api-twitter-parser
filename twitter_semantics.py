@@ -4,7 +4,6 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Activation
 from keras.layers.embeddings import Embedding
 from keras.layers.recurrent import LSTM
-# from tweets_parser import *
 import sys
 import os.path
 
@@ -181,13 +180,13 @@ def save_semantics_weights(m, file_name='weights.h5'):
 
 def semantic_analysis(parsed_tweets, file_path='weights.h5'):
     if os.path.isfile(file_path):
-        print "We found file '%s' in root folder" % file_path
+        print "Found file '%s' in root folder" % file_path
         print 'Running semantics analysis with preloaded weights'
         print "If you want to re-train the model, please, delete '%s' file and run this method again" % file_path
         print 'For different weight file::: Please, pass the filepath as second argument'
         parsed_tweets, m = semantic_analysis_with_preloaded_weigths(parsed_tweets, file_path)
     else:
-        print "We didn\'t find file 'weights.h5' in root folder of project"
-        print 'We need to train the model - it takes time: roughly 4 days'
+        print "Didn\'t find file 'weights.h5' in root folder of project"
+        print 'Need to train the model - it takes time: roughly 4 days'
         parsed_tweets, m = semantic_analysis_without_preloaded_weigths(parsed_tweets)
     return parsed_tweets, m
