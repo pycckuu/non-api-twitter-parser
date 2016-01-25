@@ -6,6 +6,7 @@ Small Python utility which helps you to parse and analyse the tweets from Twitte
 For parsing:
 - [Firefox](https://www.mozilla.org/en-US/firefox/desktop/);
 - [Selenium](https://github.com/SeleniumHQ/selenium/tree/master/py). To install run: ```pip install selenium```
+- [NLTK](http://www.nltk.org/) (optional). To install: ```pip install nltk```
 
 For Deep Learning:
 - [Keras](http://keras.io/). To install: ```pip install keras```
@@ -59,7 +60,7 @@ Also, script will return all parsed tweets into the variable _prsd\_tweets_ whic
 - 'id' = ID of the tweet;
 - 'date' = date of the tweet as a datetime object;
 - 'text' = message of the particular tweet as a string;
-- 'emo' = sentiment: if '-1' - undefined. The field saved for Deep Learning (soon).
+- 'emo' = sentiment: if '-1' - undefined. See 'Semantics'.
 
 #### Features
 
@@ -115,7 +116,7 @@ Now, you may perform the semantics analysis. Unzip the [Stanford tweets database
 In [13]: prsd_tweets, m = twitter_semantics.semantic_analysis(prsd_tweets)
 ```
 
-It will perform the training of neural network. If you don't want to wait  long you may use already trained [Keras]() weights. Download them using this [link](https://www.dropbox.com/s/jp443in7mu5i3xr/weights.h5?dl=1) and put file in in the repository root folder. Run the script again:
+It will perform the training of neural network. If you don't want to wait  long you may use already trained [Keras]() weights. Download them using this [link](https://www.dropbox.com/s/jp443in7mu5i3xr/weights.h5?dl=1) and put file in the repository root folder. Run the script again:
 
 ```python 
 In [14]: prsd_tweets, m = twitter_semantics.semantic_analysis(prsd_tweets)
@@ -138,19 +139,76 @@ Predicting sentiments...
 [28068/28068]:100%
 ```
 
+Now, to see that 'emo' key is updated, just run:
+
+```python
+In [15]: prsd_tweets[0]
+```
+
+this will output:
+```
+{'date': datetime.datetime(2015, 12, 13, 0, 0),
+ 'emo': 0.5551493763923645,
+ 'id': 0,
+ 'text': 'Nutella, rice crackers, instant noodles, flavored mineral water, and  breakfast biscuits are all on on the list... http://fb.me/72ugXjppE'}
+```
+
 You may count positive, tolerant and negative sentiment of the tweets containing list of words by:
 
 ```python
-In [15]: twitter_semantics.daily_count_semantics_for_words(['world','global'],prsd_tweets)
+In [16]: s = twitter_semantics.daily_count_semantics_for_words(['world','global'],prsd_tweets)
 ```
 
-It will count sentiment of the tweets containing words _world_ and _global_. Now, you may build graphs of polarity of tweets:
+It will count sentiment of the tweets containing words _world_ and _global_. Again, for convenient use you may created the Pandas DataFrame:
+
+```python
+In [17]: df_s = pd.DataFrame(s)
+In [18]: df_s[-10:]
+```
+
+You will see the result:
+
+| |negative    |positive    |tolerant|
+|------------|---:|----:|----:|
+| 2015-12-21  |NaN |37  |36|
+| 2015-12-22  |NaN |26  |17|
+| 2015-12-23  |NaN |13  |20|
+| 2015-12-24  |NaN |7   |20|
+| 2015-12-25  |NaN |11  |6|
+| 2015-12-26  |NaN |23  |20|
+| 2015-12-27  |NaN |37  |30|
+| 2015-12-28  |NaN |44  |39|
+| 2015-12-29  |NaN |37  |23|
+| 2015-12-30  |NaN |19  |6|
+
+Now, you may build graphs of polarity of tweets:
+
+```python
+In [19]: df_s.fillna(0, inplace=True)
+In [20]: df_sa = pd.DataFrame()
+In [21]: df_sa['Negative'] = df_s['negative']/(df_s['negative']+df_s['positive']+df_s['tolerant'])*100
+In [22]: df_sa['Tolerant'] = df_s['tolerant']/(df_s['negative']+df_s['positive']+df_s['tolerant'])*100
+In [23]: df_sa['Positive'] = df_s['positive']/(df_s['negative']+df_s['positive']+df_s['tolerant'])*100
+In [24]: df_sa.plot(kind='area',colormap='winter')
+```
 
 ![alt tag](https://raw.githubusercontent.com/pycckuu/non-api-twitter-parser/master/img/df2.png)
 
 #### Notes  
 - It doesn't matter how many txt-files will be in _data_ folder, the utility will load them all;
 - The code of this example you may find in Jupyter (iPython) notebook _Visualisation.ipynb_.
+- You may exclude words, which are in the Brown Corpus of NLTK library, from most common word counting. you need to to install NLTK (```pip install nltk```), download the Brown Corpus dictionary:
+
+```python
+In [25]: import nltk
+In [26]: nltk.download()
+```
+
+Select The Brown dictionary and download it. Then, you may run parsing method:
+
+```python
+In [27]: prsd_tweets = twitter_parser.parse_folder(nltk_lib=True)
+```
 
 
 #### Collaborators are really welcome!

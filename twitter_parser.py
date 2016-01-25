@@ -3,7 +3,6 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 import time
 import operator
-# import nltk
 import re
 from dateutil import parser
 import glob
@@ -12,8 +11,7 @@ often_words = ['aboard', 'about', 'above', 'across', 'after', 'against', 'along'
                'do', 'does', 'did', 'have', 'had', 'has', 'can', 'could', 'should', 'shall', 'may', 'might', 'would', 'likes', 'retweet', 'more', '\xe2\x80\xa6', 'and', 'ago', 'what', 'what', 'when', 'when', 'why', 'why', 'which', 'who', 'how', 'how', 'how', 'whose', 'whom', 'it', 'all', 'your', '21h21', '22h22', 'verified', 'new', 'be', '-', 'that', 'this', '&', 'out', 'not', 'we', 'so', 'no', 'its', '\xe6\x9d\xb1\xe6\x96\xb9\xe7\xa5\x9e\xe8\xb5\xb7', '...', 'retweeted', '|', 'says', 'rt', 'lead', 'an', '', 'httpwwwbbccouknewsuk', 'if', 'year', 'get', 'day', 'times', 'summary', 'our', 'ho', 'i', 'added', 'now', 'york', 'been', 'gov', 'just', 'years', 'green', 'great', 'or', 'daily', 'make', 'giving', 'time', 'view', 'my', 'some', 'need', 'where', 'they', 'watch', 'use', 'high', 'help', 'police', 'seconds', 'their', 'business']
 
 
-# fdist = nltk.FreqDist(nltk.corpus.brown.words())
-# mostcommon = fdist.most_common(150)
+mostcommon = []
 
 
 def scrape_page(page_url):
@@ -118,7 +116,7 @@ def twitter_wordcount(text, quantity):
     for word in text.split():
         word = word.lower()
         word = regex.sub('', word)
-        if word not in often_words and not word.isdigit():  # and word not in mostcommon:
+        if word not in often_words and not word.isdigit() and word not in mostcommon:
             if word not in wordcount:
                 wordcount[word] = 1
             else:
@@ -126,12 +124,16 @@ def twitter_wordcount(text, quantity):
     return sorted(wordcount.iteritems(), key=operator.itemgetter(1), reverse=True)[:quantity]
 
 
-def parse_folder(fldr='Data'):
+def parse_folder(fldr='Data', nltk_lib=False):
     print 'Found files'
     text = read_files(find_files(fldr))
     tweets = split_text_to_tweets(text)
     print 'Total amount of tweets: %s' % len(tweets)
     print 'Fifty most common words in tweets:'
+    if nltk_lib:
+        import nltk
+        fdist = nltk.FreqDist(nltk.corpus.brown.words())
+        mostcommon = fdist.most_common(150)
     print twitter_wordcount(text, 50)
     tweets = split_text_to_tweets(text)
     prsd_tweets = parse_tweets(tweets)
