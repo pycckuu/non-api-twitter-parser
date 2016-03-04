@@ -31,7 +31,7 @@ In command line open the folder and run python. In python shell import the modul
 In [1]: import twitter_parser
 ```
 
-Now, go to the [Twitter advanced search page](https://twitter.com/search-advanced?lang=en) and fill in form's fields in  which you are interested in, hit 'Search' button. When the page is loaded you can adjust the parameters: for instance, you may select 'News' tab if you  are interested in news relateed tweets. When everything is set and the Twitter advanced search page loads the desired result, you need to copy the address url from your browser. Now, run the scrapper with the URI as a string:
+Now, go to the [Twitter advanced search page](https://twitter.com/search-advanced?lang=en) and fill in form's fields in  which you are interested in, hit 'Search' button. When the page is loaded you can adjust the parameters: for instance, you may select 'News' tab if you  are interested in news related tweets. When everything is set and the Twitter advanced search page loads the desired result, you need to copy the URL address from your browser. Now, run the scrapper with the URI as a string:
 
 ```python
 In [2]: twitter_parser.scrape_page('https://twitter.com/search?f=news&vertical=news&q=water&src=typd&lang=en')
