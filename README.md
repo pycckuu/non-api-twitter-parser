@@ -1,5 +1,5 @@
 # Non API Twitter Parser with Semantics Analysis
-Small Python utility which helps you to parse and analyse the tweets from Twitter without using twitter API. The API has a restrictions and I wrote this script in order to overcome them. Moreover, this script contain methods which helps you analyse the statistics of tweets including semantic using Deep Learning Recurrent Neural Network algorithms based on [Keras](http://keras.io/), [Theano](https://github.com/Theano/Theano), and/or [TensorFlow](https://github.com/tensorflow/tensorflow). 
+Small [Python](https://www.python.org/) utility which helps you parse and analyze the tweets from Twitter without using twitter API. The API has a restrictions and I wrote this script in order to overcome them. Moreover, this script contain methods which helps you analyze the statistics of tweets including semantic using Deep Learning Recurrent Neural Network algorithms based on [Keras](http://keras.io/), [Theano](https://github.com/Theano/Theano), and/or [TensorFlow](https://github.com/tensorflow/tensorflow). 
 
 #### Requirements
 
@@ -15,6 +15,7 @@ For Deep Learning:
 - csv. To install: ```pip install csv```
 - numpy. To install: ```pip install numpy```
 
+If you don't know what is ```pip```, please, refer to [documentation](https://pip.pypa.io/en/stable/), or [Github page](https://github.com/pypa/pip). 
 
 #### Usage
 
