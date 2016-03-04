@@ -1,6 +1,4 @@
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.common.keys import Keys
 import time
 import operator
 import re
@@ -35,13 +33,12 @@ def daily_count_words(words, prsd_tweets):
 
 
 def parse_date(tweet):
-    last_year_date = re.findall('(\d+\s\D{3}\s2015)', tweet)
+    last_year_date = re.findall('(\d+\s\D{3}\s2015)\n', tweet)
     if last_year_date:
         return parser.parse(last_year_date[0])
-    this_january_date = re.findall('\sJan\s(\d+)', tweet)
-    # TODO: This month searcher could be improved to whole this year searcher like last year one.
-    if this_january_date:
-        return parser.parse("%s Jan 2016" % (this_january_date[0]))
+    this_year_date = re.findall('\s(\D{3}\s\d+)\n', tweet)
+    if this_year_date:
+        return parser.parse(this_year_date[0])
     if (re.findall('([0-9]+)\shour', tweet)):  # if today?
         return parser.parse('On')
     return None
