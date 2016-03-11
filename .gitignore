@@ -2,3 +2,5 @@
 /.ipynb_checkpoints/
 *.h5
 /stanford_train_data/
+*.tags
+*.tags_sorted_by_file
