@@ -4,3 +4,5 @@
 /stanford_train_data/
 *.tags
 *.tags_sorted_by_file
+/non-api-twitter-parser.sublime-project
+/non-api-twitter-parser.sublime-workspace
