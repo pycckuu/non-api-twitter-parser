@@ -119,13 +119,14 @@ In [12]: df1.plot(kind='area')
 Now, you may perform the semantics analysis. Unzip the [Stanford tweets database](http://help.sentiment140.com/for-students/) _stanford\_train\_data.zip_, which is in the folder of repository. Run the model:
 
 ```python
-In [13]: prsd_tweets, m = twitter_semantics.semantic_analysis(prsd_tweets)
+In [13]: import twitter_parser
+In [14]: prsd_tweets, m = twitter_semantics.semantic_analysis(prsd_tweets)
 ```
 
 It will perform the training of neural network. If you don't want to wait  long you may use already trained [Keras]() weights. Download them using this [link](https://www.dropbox.com/s/jp443in7mu5i3xr/weights.h5?dl=1) and put file in the repository root folder. Run the script again:
 
 ```python 
-In [14]: prsd_tweets, m = twitter_semantics.semantic_analysis(prsd_tweets)
+In [15]: prsd_tweets, m = twitter_semantics.semantic_analysis(prsd_tweets)
 ```
 
 The script will update the _emo_ key of dictionaries _prsd\_tweets_ much faster without learning of the model. As the output you will see the following:
@@ -148,7 +149,7 @@ Predicting sentiments...
 Now, to see that 'emo' key is updated, just run:
 
 ```python
-In [15]: prsd_tweets[0]
+In [16]: prsd_tweets[0]
 ```
 
 this will output:
@@ -162,14 +163,14 @@ this will output:
 You may count positive, tolerant and negative sentiment of the tweets containing list of words by:
 
 ```python
-In [16]: s = twitter_semantics.daily_count_semantics_for_words(['world','global'],prsd_tweets)
+In [17]: s = twitter_semantics.daily_count_semantics_for_words(['world','global'],prsd_tweets)
 ```
 
 It will count sentiment of the tweets containing words _world_ and _global_. Again, for convenient use you may created the Pandas DataFrame:
 
 ```python
-In [17]: df_s = pd.DataFrame(s)
-In [18]: df_s[-10:]
+In [18]: df_s = pd.DataFrame(s)
+In [19]: df_s[-10:]
 ```
 
 You will see the result:
@@ -190,12 +191,12 @@ You will see the result:
 Now, you may build graphs of polarity of tweets:
 
 ```python
-In [19]: df_s.fillna(0, inplace=True)
-In [20]: df_sa = pd.DataFrame()
-In [21]: df_sa['Negative'] = df_s['negative']/(df_s['negative']+df_s['positive']+df_s['tolerant'])*100
-In [22]: df_sa['Tolerant'] = df_s['tolerant']/(df_s['negative']+df_s['positive']+df_s['tolerant'])*100
-In [23]: df_sa['Positive'] = df_s['positive']/(df_s['negative']+df_s['positive']+df_s['tolerant'])*100
-In [24]: df_sa.plot(kind='area',colormap='winter')
+In [20]: df_s.fillna(0, inplace=True)
+In [21]: df_sa = pd.DataFrame()
+In [22]: df_sa['Negative'] = df_s['negative']/(df_s['negative']+df_s['positive']+df_s['tolerant'])*100
+In [23]: df_sa['Tolerant'] = df_s['tolerant']/(df_s['negative']+df_s['positive']+df_s['tolerant'])*100
+In [24]: df_sa['Positive'] = df_s['positive']/(df_s['negative']+df_s['positive']+df_s['tolerant'])*100
+In [25]: df_sa.plot(kind='area',colormap='winter')
 ```
 
 ![alt tag](https://raw.githubusercontent.com/pycckuu/non-api-twitter-parser/master/img/df2.png)
@@ -206,14 +207,14 @@ In [24]: df_sa.plot(kind='area',colormap='winter')
 - You may exclude words, which are in the Brown Corpus of NLTK library, from most common word counting. you need to to install NLTK (```pip install nltk```), download the Brown Corpus dictionary:
 
 ```python
-In [25]: import nltk
-In [26]: nltk.download()
+In [26]: import nltk
+In [27]: nltk.download()
 ```
 
 Select The Brown dictionary and download it. Then, you may run parsing method:
 
 ```python
-In [27]: prsd_tweets = twitter_parser.parse_folder(nltk_lib=True)
+In [28]: prsd_tweets = twitter_parser.parse_folder(nltk_lib=True)
 ```
 
 
