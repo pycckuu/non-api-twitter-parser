@@ -119,7 +119,7 @@ In [12]: df1.plot(kind='area')
 Now, you may perform the semantics analysis. Unzip the [Stanford tweets database](http://help.sentiment140.com/for-students/) _stanford\_train\_data.zip_, which is in the folder of repository. Run the model:
 
 ```python
-In [13]: import twitter_parser
+In [13]: import twitter_semantics
 In [14]: prsd_tweets, m = twitter_semantics.semantic_analysis(prsd_tweets)
 ```
 
